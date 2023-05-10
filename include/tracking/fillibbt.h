@@ -9,6 +9,11 @@
  *			either real or complex data. Modified for multi threads
  */
 #pragma once
+#ifdef _WIN32
+#define M_PI 3.141592653589793238462643383279502884197
+#define M_PI_2 1.57079632679
+#endif
+
 
 typedef struct _filter
 {

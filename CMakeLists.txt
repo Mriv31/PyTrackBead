@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(PyTrackBead VERSION 0.1)
-set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_EXTENSIONS ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_C_FLAGS_DEBUG "-g")
-add_compile_options(-ggdb3)
+#set(CMAKE_CXX_FLAGS_DEBUG "-g")
+#set(CMAKE_C_FLAGS_DEBUG "-g")
+#add_compile_options(-ggdb3)
 
 # Common installation directories
 include(GNUInstallDirs)
@@ -52,8 +52,11 @@ find_package(Threads REQUIRED)
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
  )
-
+ IF (WIN32)
+ target_link_libraries(Tracker Threads::Threads )
+ ELSE()
  target_link_libraries(Tracker Threads::Threads m )
+ENDIF()
 
 #################################
 # python bindings over zwo_asi #

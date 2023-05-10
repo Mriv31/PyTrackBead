@@ -10,7 +10,11 @@
  *		in 32 bits with the DOS EXTENDER
  */
 
- #include <math.h>
+#ifdef _WIN32
+#define M_PI 3.141592653589793238462643383279502884197
+#endif
+
+#include <math.h>
 #include <stdlib.h>
 
 
