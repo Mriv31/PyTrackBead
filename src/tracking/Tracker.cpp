@@ -67,7 +67,7 @@ void Tracker::addBuffer(unsigned char* buffer, int size)
   buffer_size+=1;
 }
 
-void Tracker::define_image_counter(long int *buffer,int size)
+void Tracker::define_image_counter(int *buffer,int size)
 {
   if (defined_image_counter) throw std::runtime_error("image counter already defined");
   if (size !=1) throw std::runtime_error("size of image counter must be 1");

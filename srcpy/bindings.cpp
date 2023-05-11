@@ -9,10 +9,10 @@ void addBuffer(Tracker& vt, pybind11::array_t<unsigned char>& image, int image_s
   vt.addBuffer((unsigned char*)buffer.ptr, image_size);
 }
 
-void define_image_counter(Tracker& vt, pybind11::array_t<long int>& counter, int size)
+void define_image_counter(Tracker& vt, pybind11::array_t<int>& counter, int size)
 {
   pybind11::buffer_info buffer = counter.request();
-  vt.define_image_counter((long int*)buffer.ptr, size);
+  vt.define_image_counter((int*)buffer.ptr, size);
 }
 
 void define_timebuffer(Tracker& vt, pybind11::array_t<uint64_t>& counter)
