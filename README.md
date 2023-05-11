@@ -4,8 +4,25 @@ This is a python wrapper of the XY tracking funtions written by Vincent Croquett
 
 The tracking will run in a separate C++ Thread.
 
-## See the example Example.py
-An example of use is given in Example.py.
+## Installation of pre-built assembly
+
+### Python3.10 Windows 64 bits
+pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win_amd64.whl
+
+### Python3.10 Windows 32 bits
+pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win32.whl
+
+
+## Build yourself
+Shouldn't be too hard but you need to know a bit how to do.
+pip install git+https://github.com/Mriv31/PyTrackBead
+
+
+## example
+Install pyqtgraph ```pip install pyqtgraph```
+Clone the repo : ```git clone https://github.com/Mriv31/PyTrackBead```
+Make the Example directory as your current directory ```cd Examples```
+Run the Example : ```python test.py```
 
 
 ##Definitions of Buffer
