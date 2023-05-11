@@ -1,8 +1,9 @@
 *~
 *.pyc
 build
-dist
 *.egg-info
 99-asi.rules
 zwo_asi.toml
 *__pycache__
+out
+.vs
