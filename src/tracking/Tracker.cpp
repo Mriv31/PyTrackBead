@@ -12,7 +12,6 @@ Tracker::Tracker(int height,int width)
   w = width;
   h = height;
   nbead = 0;
-  beadtracking = 0;
 
   beadl = new Bead*[nbeadmax];
 
@@ -92,16 +91,13 @@ void Tracker::addBead(int clh,int cwh, int xch, int ych)
 }
 
 
-void Tracker::startBeadTrack()
-{
-  beadtracking = 1;
-}
 
 
 void DoTrack(Tracker* tracker) {
   int frames_late = 0;
     while(1)
     {
+      // add little sleep here
       if (tracker->stop)
       {
         tracker->set_frames_to_analyze(-2);
@@ -111,7 +107,6 @@ void DoTrack(Tracker* tracker) {
       if (tracker->buffer_size == 0)
       {
         throw std::runtime_error("no buffer given to the track");
-
       }
       //here defined O_il
       frames_late = *(tracker->_frames_to_analyze) - tracker->nb_frames_analyzed;
@@ -120,8 +115,6 @@ void DoTrack(Tracker* tracker) {
         throw std::runtime_error("missed more frames than buffer size. Will stop.");
       }
       while (frames_late > 0)
-      {
-      if (tracker->beadtracking)
       {
 
         for (int i =0;i<tracker->nbead;i++)
@@ -143,9 +136,6 @@ void DoTrack(Tracker* tracker) {
         }
 
 
-        }
-
-      //printf("buffer content %d \n",tracker->buffer_list[tracker->ci][10]);
       tracker->ci+=1;
       tracker->nb_frames_analyzed+=1;
       frames_late = *(tracker->_frames_to_analyze) - tracker->nb_frames_analyzed;

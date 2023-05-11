@@ -12,7 +12,6 @@ class Tracker {
 public:
   Tracker(int width,int length);
   void addBead(int clh,int cwh, int xch, int ych);
-  void startBeadTrack();
   void addBuffer(unsigned char* buffer, int size);
   void Start();
   void Stop();
@@ -33,7 +32,6 @@ public:
   int *_frames_to_analyze;
   int nb_frames_analyzed;
   int buffer_size;
-  int beadtracking;
   O_i ** O_il;
   int nbead;
   Bead **beadl;

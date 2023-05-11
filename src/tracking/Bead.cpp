@@ -2,9 +2,8 @@
 #include <cstdio>
 
 
-int mouse_draged;
 
-Bead::Bead(int clh,int cwh, int xch, int ych)
+Bead::Bead(int clh,int cwh, int xch, int ych, int ddt)
 {
   ncl = cl = clh;
   ncw =cw = cwh;
@@ -19,7 +18,7 @@ Bead::Bead(int clh,int cwh, int xch, int ych)
   max_limit = cl >> 1;
 
   bd_mul = 1;
-  do_diff_track = 1;
+  do_diff_track = ddt;
 
   fence_x = -1;
   fence_y = -1;
@@ -36,14 +35,10 @@ Bead::Bead(int clh,int cwh, int xch, int ych)
   saved_y = last_y_not_lost = (float)yc;
   xc = x0 = xch;
   yc = y0 = ych;
-  mouse_draged = 0;
   not_lost = NB_FRAMES_BEF_LOST;
-  start_im = 0;
   cross_45 = 0;
 
 }
-
-
 
 
 void Bead::Track(O_i *oi)

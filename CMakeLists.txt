@@ -1,15 +1,17 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(PyTrackBead VERSION 0.1)
-#set(CMAKE_BUILD_TYPE Debug)
+project(PyTrackBead VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_EXTENSIONS ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(CMAKE_CXX_FLAGS_DEBUG "-g")
-#set(CMAKE_C_FLAGS_DEBUG "-g")
-#add_compile_options(-ggdb3)
+
+###### LINUX DEBUg
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_C_FLAGS_DEBUG "-g")
+add_compile_options(-ggdb3)
 
 # Common installation directories
 include(GNUInstallDirs)
@@ -28,12 +30,9 @@ find_package(Threads REQUIRED)
 
 
 
-
-
-
 ###################################################
-# zwo_asi: library for higher level calls to the #
-# ZWO library                                     #
+# tracker: library for higher level calls to the #
+# tracker library                                     #
 ###################################################
 
 
@@ -46,7 +45,6 @@ find_package(Threads REQUIRED)
   )
 
 
-
  target_include_directories(Tracker PUBLIC
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tracking>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -55,11 +53,11 @@ find_package(Threads REQUIRED)
  IF (WIN32)
  target_link_libraries(Tracker Threads::Threads )
  ELSE()
- target_link_libraries(Tracker Threads::Threads m )
+ target_link_libraries(Tracker Threads::Threads m ) #must add the math library for linux
 ENDIF()
 
 #################################
-# python bindings over zwo_asi #
+# python bindings over tracker #
 #################################
 
 if(CALL_FROM_SETUP_PY)
@@ -81,7 +79,7 @@ target_link_libraries(pybind11_bindings
 ###########
 
 install(
-    TARGETS  Tracker #MODIFIED MR
+    TARGETS  Tracker
     EXPORT TrackerTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

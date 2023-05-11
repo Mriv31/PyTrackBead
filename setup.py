@@ -31,7 +31,6 @@ with open(version_path) as version_file:
 
 from pathlib import Path
 this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     ext_modules=[
@@ -50,13 +49,6 @@ setuptools.setup(
         ),
     ],
     version=version_dict['__version__'],
-    description='python bead tracker',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    url='https://github.com/Mriv31/PyTrackBead',
-    license='BSD 3-Clause License',
-    author='Martin Rieu',
-    author_email='martin.rieu@physics.ox.ac.uk',
     cmdclass=dict(
         build_ext=cmake_build_extension.BuildExtension,
     ),
