@@ -7,15 +7,15 @@ The tracking will run in a separate C++ Thread.
 ## Installation of pre-built assembly
 
 ### Python3.10 Windows 64 bits
-pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win_amd64.whl
+```pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win_amd64.whl```
 
 ### Python3.10 Windows 32 bits
-pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win32.whl
+```pip install git+https://github.com/Mriv31/PyTrackBead/PyTrackBead-1.0-cp310-cp310-win32.whl```
 
 
 ## Build yourself
-Shouldn't be too hard but you need to know a bit how to do.
-pip install git+https://github.com/Mriv31/PyTrackBead
+Shouldn't be too hard but you need to define a correct build environment and you will need pybind11. 
+```pip install git+https://github.com/Mriv31/PyTrackBead```
 
 
 ## example
