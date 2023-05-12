@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 import cmake_build_extension
 import setuptools
-from distutils.util import convert_pathrsion or architecture')
+from distutils.util import convert_path
 
 init_py = inspect.cleandoc(
     """
