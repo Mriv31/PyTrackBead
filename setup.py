@@ -4,7 +4,18 @@ import sys
 from pathlib import Path
 import cmake_build_extension
 import setuptools
-from distutils.util import convert_path
+from distutils.util import convert_path, dir_util
+
+from wheel.pep425tags import get_supported
+
+if dir_util.is_file('dist/PyTrackBead-*.whl'):
+    print('Found built wheel, installing...')
+    whl_path = dir_util.get_path('dist/PyTrackBead-*.whl')
+    whl_info = wheel.Wheel(whl_path)
+    if whl_info.supported(version.LooseVersion(sys.version), sys.platform):
+        pip install whl_path
+    else:
+        print('Wheel is not compatible with this Python version or architecture')
 
 init_py = inspect.cleandoc(
     """
