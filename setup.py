@@ -13,6 +13,7 @@ if dir_util.is_file('dist/PyTrackBead-*.whl'):
     whl_path = dir_util.get_path('dist/PyTrackBead-*.whl')
     whl_info = wheel.Wheel(whl_path)
     if whl_info.supported(version.LooseVersion(sys.version), sys.platform):
+        print(whl_path)
         pip install whl_path
         return
     else:
