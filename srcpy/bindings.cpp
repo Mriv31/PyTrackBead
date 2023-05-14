@@ -22,6 +22,15 @@ void define_timebuffer(Tracker& vt, pybind11::array_t<uint64_t>& counter)
 }
 
 
+MutexCV* get_mutex(Tracker& vt)
+{
+  MutexCV* mcv = vt.get_mutex();
+  pybind11::set_shared_data("sharedmutex",mcv);
+  return mcv;
+}
+
+
+
 
 
 PYBIND11_MODULE(bindings, m)
@@ -29,7 +38,7 @@ PYBIND11_MODULE(bindings, m)
 
   m.doc() = "BeadTracker bindings";
 
-  pybind11::class_<MutexCV,std::unique_ptr<MutexCV, pybind11::nodelete>>(m, "MutexCV")
+  pybind11::class_<MutexCV,std::unique_ptr<MutexCV, pybind11::nodelete>>(m, "MutexCV",pybind11::module_local(false))
     .def(pybind11::init<>());
 
 
