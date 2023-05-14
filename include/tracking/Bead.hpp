@@ -2,7 +2,7 @@
 #include "track_util.h"
 #include <vector>
 
-#define TRACKING_BUFFER_SIZE 128
+#define TRACKING_BUFFER_SIZE 256
 #define NB_FRAMES_BEF_LOST 128
 
 
@@ -14,8 +14,8 @@ public:
   Bead(int a,int b, int c, int d, int ddt = 0);
   ~Bead();
   void Track(O_i *oi);
-  float get_x(){if (ci !=0) return x[ci-1]; else return x[TRACKING_BUFFER_SIZE];};
-  float get_y(){if (ci !=0) return y[ci-1]; else return y[TRACKING_BUFFER_SIZE];};
+  float get_x(){if (ci !=0) return x[ci-1]; else return x[TRACKING_BUFFER_SIZE-1];};
+  float get_y(){if (ci !=0) return y[ci-1]; else return y[TRACKING_BUFFER_SIZE-1];};
   std::vector<float> get_copy_x_array();
   std::vector<float> get_copy_y_array();
 

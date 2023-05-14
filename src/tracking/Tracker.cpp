@@ -25,6 +25,7 @@ Tracker::Tracker(int height,int width)
   saving = 0;
   defined_time_buffer = 0;
   stop = 0;
+  stopped = 1;
 
   _frames_to_analyze = NULL;
   defined_image_counter = 0;
@@ -66,11 +67,12 @@ void Tracker::addBuffer(unsigned char* buffer, int size)
   buffer_size+=1;
 }
 
-void Tracker::define_image_counter(int *buffer,int size)
+void Tracker::define_image_counter(int *buffer, int size)
 {
   if (defined_image_counter) throw std::runtime_error("image counter already defined");
   if (size !=1) throw std::runtime_error("size of image counter must be 1");
   defined_image_counter = 1;
+
   _frames_to_analyze = buffer;
 }
 
@@ -95,12 +97,17 @@ void Tracker::addBead(int clh,int cwh, int xch, int ych)
 
 void DoTrack(Tracker* tracker) {
   int frames_late = 0;
+  int fta = 0;
+  tracker->stopped = 0;
+  tracker->stop = 0;
+
+  std::unique_lock lock(tracker->mcv.m_mutex,std::defer_lock);
     while(1)
     {
-      // add little sleep here
       if (tracker->stop)
       {
-        tracker->set_frames_to_analyze(-2);
+        tracker->stop_saving();
+        tracker->stopped = 1;
         return;
       }
 
@@ -109,7 +116,12 @@ void DoTrack(Tracker* tracker) {
         throw std::runtime_error("no buffer given to the track");
       }
       //here defined O_il
-      frames_late = *(tracker->_frames_to_analyze) - tracker->nb_frames_analyzed;
+      lock.lock();
+      tracker->mcv.cv.wait(lock);
+      fta = *tracker->_frames_to_analyze;
+      lock.unlock();
+
+      frames_late = fta - tracker->nb_frames_analyzed;
       if (frames_late >= tracker->buffer_size)
       {
         throw std::runtime_error("missed more frames than buffer size. Will stop.");
@@ -138,13 +150,21 @@ void DoTrack(Tracker* tracker) {
 
       tracker->ci+=1;
       tracker->nb_frames_analyzed+=1;
-      frames_late = *(tracker->_frames_to_analyze) - tracker->nb_frames_analyzed;
+      frames_late = fta - tracker->nb_frames_analyzed;
 
       if (tracker->ci == tracker->buffer_size) tracker->ci =0;
     }
      }
 
 }
+
+void Tracker::stop_saving()
+{
+  if (saving == 0) return ;
+  outfile.close();
+  saving = 0;
+}
+
 
 
 void Tracker::set_saving(std::string file)
@@ -161,6 +181,10 @@ void Tracker::set_saving(std::string file)
 
 void Tracker::Stop() {
     stop = 1;
+    while(stopped == 0)
+    {
+      0;
+    }
 }
 void Tracker::Start() {
     std::thread t(DoTrack, this);

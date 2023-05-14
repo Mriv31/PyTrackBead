@@ -3,9 +3,21 @@
 # include "track_util.h"
 #include <iostream>
 #include <fstream>
+#include <mutex>
+#include <condition_variable>
 
 #define MAX_TRACKING_BUFFER_SIZE 1024
 
+
+class MutexCV {
+public:
+    MutexCV() = default;
+    void notify_one() { cv.notify_one(); };
+    std::mutex m_mutex;
+    std::condition_variable cv;
+
+
+};
 
 
 class Tracker {
@@ -19,10 +31,13 @@ public:
   float get_x(int bdnb);
   float get_y(int bdnb);
   void set_saving(std::string file);
+  void stop_saving();
   void define_timebuffer(uint64_t *buffer);
   std::vector<float> get_copy_x_array(int i);
   std::vector<float> get_copy_y_array(int i);
   void set_frames_to_analyze(int a){*_frames_to_analyze=a;};
+  void notify_one() {mcv.notify_one();};
+  MutexCV* get_mutex(){return &mcv;};
 
 
 
@@ -41,6 +56,9 @@ public:
   uint64_t* timebuffer;
   int defined_time_buffer;
   int stop;
+  int stopped;
+
+  MutexCV mcv;
 
 
 

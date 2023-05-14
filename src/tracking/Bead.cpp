@@ -125,8 +125,13 @@ else
 //printf("x = %f\n",x[ci]);
 //printf("y = %f\n",y[ci]);
 
-//xc = (int) (xcf + 0.5); Should be update xc ?
-//yc = (int) (xcf + 0.5);
+xc = (int) (xcf + 0.5); //Should be update xc ?
+yc = (int) (ycf + 0.5);
+
+if (xc<cl2) xc = cl2;
+if (xc>= oi->im.nx-cl2) xc = oi->im.nx-cl2-1;
+if (yc<cl2) yc = cl2;
+if (yc>= oi->im.ny-cl2) yc = oi->im.ny-cl2-1;
 
 
 ci++;

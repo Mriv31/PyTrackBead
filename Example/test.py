@@ -8,6 +8,7 @@ import pyqtgraph as pg
 from CrossItem import CrossItem
 
 
+
 im_buffer_size = 128
 
 
@@ -107,6 +108,7 @@ def updateData():
     time_buf[ci] = (time.time()-st)*1000
     buffers[ci][:,:] = np.asarray(Image.open(imfolder+"file"+str(imnb)+".tiff"))
     nb_frame_put[0] +=1
+    Tr.notify_one();
     ci+=1
     if (ci == im_buffer_size):
         ci = 0

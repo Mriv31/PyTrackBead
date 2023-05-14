@@ -29,6 +29,9 @@ PYBIND11_MODULE(bindings, m)
 
   m.doc() = "BeadTracker bindings";
 
+  pybind11::class_<MutexCV,std::unique_ptr<MutexCV, pybind11::nodelete>>(m, "MutexCV")
+    .def(pybind11::init<>());
+
 
 pybind11::class_<Tracker>(m, "Tracker")
   .def(pybind11::init<int, int>())
@@ -41,9 +44,14 @@ pybind11::class_<Tracker>(m, "Tracker")
   .def("get_x",&Tracker::get_x)
   .def("get_y",&Tracker::get_y)
   .def("set_saving",&Tracker::set_saving)
+  .def("stop_saving",&Tracker::stop_saving)
   .def("define_timebuffer",&define_timebuffer)
   .def("get_copy_x_array",&Tracker::get_copy_x_array)
   .def("get_copy_y_array",&Tracker::get_copy_y_array)
-  .def("set_frames_to_analyze",&Tracker::set_frames_to_analyze);
+  .def("set_frames_to_analyze",&Tracker::set_frames_to_analyze)
+  .def("get_mutex",&Tracker::get_mutex)
+  .def("notify_one",&Tracker::notify_one);
+
+
 
   }
